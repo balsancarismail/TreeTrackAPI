@@ -3,7 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTrack", "TreeTrack\TreeTrack.csproj", "{A13AA351-227B-40BA-B26A-C0B282D438FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeTrackAPI.WebAPI", "TreeTrack\TreeTrackAPI.WebAPI.csproj", "{A13AA351-227B-40BA-B26A-C0B282D438FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982} = {CA611A21-FFC5-4A74-AAA9-764C53AD3982}
+		{D75F7FFF-B706-45E9-809F-976913500C1A} = {D75F7FFF-B706-45E9-809F-976913500C1A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeTrackAPI.Domain", "Domain\TreeTrackAPI.Domain.csproj", "{CA611A21-FFC5-4A74-AAA9-764C53AD3982}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTrackAPI.Services", "TreeTrackAPI.Services\TreeTrackAPI.Services.csproj", "{D75F7FFF-B706-45E9-809F-976913500C1A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C040EEDE-FB1D-40A9-8AF1-9948008527AA} = {C040EEDE-FB1D-40A9-8AF1-9948008527AA}
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982} = {CA611A21-FFC5-4A74-AAA9-764C53AD3982}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTrackAPI.DataAccessLayer", "TreeTrackAPI.DataAccessLayer\TreeTrackAPI.DataAccessLayer.csproj", "{C040EEDE-FB1D-40A9-8AF1-9948008527AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982} = {CA611A21-FFC5-4A74-AAA9-764C53AD3982}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +32,18 @@ Global
 		{A13AA351-227B-40BA-B26A-C0B282D438FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A13AA351-227B-40BA-B26A-C0B282D438FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A13AA351-227B-40BA-B26A-C0B282D438FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA611A21-FFC5-4A74-AAA9-764C53AD3982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D75F7FFF-B706-45E9-809F-976913500C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75F7FFF-B706-45E9-809F-976913500C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75F7FFF-B706-45E9-809F-976913500C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75F7FFF-B706-45E9-809F-976913500C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C040EEDE-FB1D-40A9-8AF1-9948008527AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C040EEDE-FB1D-40A9-8AF1-9948008527AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C040EEDE-FB1D-40A9-8AF1-9948008527AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C040EEDE-FB1D-40A9-8AF1-9948008527AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
