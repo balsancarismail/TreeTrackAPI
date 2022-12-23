@@ -14,8 +14,5 @@ namespace TreeTrackAPI.Domain.concretes
         public string Description { get; set; }
         public byte[] Image { get; set; }
         public DateTime Date { get; set; }
-        public Garden Garden { get; set; }
-
-        public Plant Plant { get; set; }
     }
 }

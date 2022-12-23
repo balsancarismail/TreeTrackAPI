@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using TreeTrackAPI.DataAccessLayer.concretes.efcore;
@@ -12,9 +13,11 @@ using TreeTrackAPI.DataAccessLayer.concretes.efcore;
 namespace TreeTrackAPI.DataAccessLayer.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221223065458_geo_point_and_geo_poly_addittion")]
+    partial class geopointandgeopolyaddittion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +93,7 @@ namespace TreeTrackAPI.DataAccessLayer.Migrations
 
                     b.HasIndex("GardenId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("TreeTrackAPI.Domain.concretes.Note", b =>

@@ -16,11 +16,11 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore.configurations
             builder.Property(g => g.GardenName).IsRequired();
             builder.Property(g => g.CreatedAt).IsRequired();
             builder.Property(g => g.Area).IsRequired(false);
+            builder.Property(g => g.Polygon).IsRequired(false);
 
             builder.HasKey(g => g.Id);
             builder.HasMany(g => g.Plants).WithOne(p => p.Garden).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(g => g.Users).WithMany(u => u.Gardens);
-            builder.HasMany(g => g.Locations).WithOne(l => l.Garden);
         }
     }
 }

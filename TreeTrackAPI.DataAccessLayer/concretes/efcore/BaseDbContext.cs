@@ -15,7 +15,6 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<Garden> Gardens { get; set; }
-        public DbSet<Location> Locations { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Plant> Plants { get; set; }
         public DbSet<PlantType> PlantTypes { get; set; }
@@ -30,7 +29,11 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TreeTrack;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False", opt => opt.MigrationsAssembly("TreeTrackAPI.DataAccessLayer"));
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TreeTrack;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False", opt =>
+                {
+                    opt.MigrationsAssembly("TreeTrackAPI.DataAccessLayer");
+                    opt.UseNetTopologySuite();
+                });
             }
         }
 

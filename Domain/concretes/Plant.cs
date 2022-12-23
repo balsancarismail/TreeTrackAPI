@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Azure.Core.GeoJson;
+using NetTopologySuite.Geometries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace TreeTrackAPI.Domain.concretes
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Location Location { get; set; }
+        public Point Point { get; set; }
         public Garden Garden { get; set; }
         public PlantType PlantType { get; set; }
         public List<Note> Notes { get; set; }

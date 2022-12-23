@@ -17,7 +17,6 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore.configurations
             builder.Property(l => l.Country).IsRequired();
 
             builder.HasKey(l => l.Id);
-            builder.HasOne(l => l.Garden).WithMany(g => g.Locations).IsRequired(false);
 
         }
     }
