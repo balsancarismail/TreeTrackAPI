@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TreeTrackAPI.Domain.enums
+﻿namespace TreeTrackAPI.Domain.enums
 {
     public enum OrderType
     {

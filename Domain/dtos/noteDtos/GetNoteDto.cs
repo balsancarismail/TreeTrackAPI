@@ -1,8 +1,12 @@
-﻿using TreeTrackAPI.Domain.abstracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TreeTrackAPI.Domain.concretes
+namespace TreeTrackAPI.Domain.dtos.noteDtos
 {
-    public class Note : BaseEntity
+    public class GetNoteDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

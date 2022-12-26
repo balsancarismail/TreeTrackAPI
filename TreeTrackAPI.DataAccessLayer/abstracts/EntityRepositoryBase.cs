@@ -76,5 +76,13 @@ namespace TicketSystem.Core.Abstract.Dal
                 return entity;
             }
         }
+
+        public IQueryable<TEntity> GetAll()
+        {
+            using (TContext context = new())
+            {
+                return context.Set<TEntity>().AsQueryable();
+            }
+        }
     }
 }

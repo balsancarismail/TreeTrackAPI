@@ -1,12 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using TreeTrackAPI.Domain.concretes;
 
 namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
@@ -15,7 +8,7 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<Garden> Gardens { get; set; }
-        public DbSet<Note> Notes { get; set; }
+        //public DbSet<Note> Notes { get; set; }
         public DbSet<Plant> Plants { get; set; }
         public DbSet<PlantType> PlantTypes { get; set; }
         public DbSet<User> Users { get; set; }

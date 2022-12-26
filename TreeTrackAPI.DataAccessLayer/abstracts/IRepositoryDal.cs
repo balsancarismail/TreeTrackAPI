@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using System.Security.Principal;
 using TreeTrackAPI.Domain.abstracts;
 using TreeTrackAPI.Domain.enums;
 
@@ -12,6 +11,7 @@ namespace TicketSystem.Core.Abstract.Dal
         void Remove(TEntity entity);
         Task<List<TEntity>> GetAllAsync();
         Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter);
+        IQueryable<TEntity> GetAll();
         Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, TKey>> selector, OrderType orderByType = OrderType.DESC);
         Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, TKey>> selector, OrderType orderByType = OrderType.DESC);
         Task<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> filter, bool asNoTracking = false);
