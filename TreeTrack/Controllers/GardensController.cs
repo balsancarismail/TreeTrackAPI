@@ -24,9 +24,10 @@ namespace TreeTrackAPI.WebAPI.Controllers
         }
 
         [HttpPost("/save-garden/{user-id}")]
-        public async Task<IActionResult> save(SaveGardenDto dto, int userId) {
-            
-            var response = await gardenService.saveGarden(dto,userId); 
+        public async Task<IActionResult> save(SaveGardenDto dto, int userId)
+        {
+
+            var response = await gardenService.saveGarden(dto, userId);
             return base.Ok(response);
         }
 
@@ -47,7 +48,7 @@ namespace TreeTrackAPI.WebAPI.Controllers
         [HttpPost("/save-note/{garden-id}")]
         public IActionResult saveNote(SaveNoteDto saveNoteDto, int gardenId)
         {
-            var response = gardenService.addNote(saveNoteDto,gardenId);
+            var response = gardenService.addNote(saveNoteDto, gardenId);
             return base.Ok(response);
         }
     }

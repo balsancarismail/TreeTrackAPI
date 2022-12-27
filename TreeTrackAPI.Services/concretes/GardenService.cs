@@ -30,7 +30,7 @@ namespace TreeTrackAPI.Services.concretes
             garden.Users = new List<User> { user };
 
             var savedGarden = await this.gardenDal.CreateAsync(garden);
-            if(savedGarden == null) { throw new Exception("Garden could not be created"); }
+            if (savedGarden == null) { throw new Exception("Garden could not be created"); }
 
             var getGarden = mapper.Map<GetGardenDto>(saveGardenDto);
             return getGarden;
@@ -74,7 +74,7 @@ namespace TreeTrackAPI.Services.concretes
         {
             var garden = gardenDal.GetAll().Include(g => g.Notes).Where(g => g.Id == gardenId).FirstOrDefault();
             var note = mapper.Map<Note>(saveNoteDto);
-            if(saveNoteDto.ImageFile != null)
+            if (saveNoteDto.ImageFile != null)
                 note.Image = saveNoteDto.ImageFile.convertToByteArray();
 
             var gardenNotes = garden.Notes ?? new List<Note> { note };
