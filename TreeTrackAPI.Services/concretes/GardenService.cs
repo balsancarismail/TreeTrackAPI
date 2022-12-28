@@ -47,7 +47,7 @@ namespace TreeTrackAPI.Services.concretes
                 return getGardenDto;
             }
 
-            throw new Exception("Garden could not be created");
+            throw new Exception("Garden could not be updated");
         }
 
         public async Task<List<GetGardenDto>> getGardens()
@@ -78,9 +78,10 @@ namespace TreeTrackAPI.Services.concretes
                 note.Image = saveNoteDto.ImageFile.convertToByteArray();
 
             var gardenNotes = garden.Notes ?? new List<Note> { note };
+            garden.Notes = gardenNotes;
             var updatedGarden = gardenDal.Update(garden);
 
-            if (updatedGarden == null) throw new Exception("Photo could not be added!");
+            if (updatedGarden == null) throw new Exception("Note could not be added!");
 
             var getNoteDto = mapper.Map<GetNoteDto>(note);
             return getNoteDto;

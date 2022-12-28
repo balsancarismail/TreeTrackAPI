@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using TreeTrackAPI.Domain.concretes;
 
@@ -29,7 +30,21 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
                 });
             }
         }
-
+        public override ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.Entries().ToList().ForEach(entry =>
+            {
+                if (entry.GetType().IsEquivalentTo(typeof(Garden)) && entry.State == EntityState.Added)
+                {
+                    ((Garden)entry.Entity).CreatedAt = DateTime.UtcNow;
+                }
+                else if (entry.GetType().IsEquivalentTo(typeof(Garden)) && entry.State == EntityState.Modified)
+                {
+                    ((Garden)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                }
+            });
+            return base.AddAsync(entity, cancellationToken);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseDbContext).Assembly);

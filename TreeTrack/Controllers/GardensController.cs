@@ -15,7 +15,7 @@ namespace TreeTrackAPI.WebAPI.Controllers
             this.gardenService = gardenService;
         }
 
-        [HttpGet("/get-all")]
+        [HttpGet("/get-all-gardens")]
         public IActionResult GetAll()
         {
             Task<List<GetGardenDto>> gardens = gardenService.getGardens();
@@ -23,7 +23,7 @@ namespace TreeTrackAPI.WebAPI.Controllers
             return base.Ok(gardens.Result);
         }
 
-        [HttpPost("/save-garden/{user-id}")]
+        [HttpPost("/save-garden/{user-gardenId}")]
         public async Task<IActionResult> save(SaveGardenDto dto, int userId)
         {
 
@@ -31,10 +31,10 @@ namespace TreeTrackAPI.WebAPI.Controllers
             return base.Ok(response);
         }
 
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("/get-garden/{garden-id}")]
+        public async Task<IActionResult> GetByGardenId(int gardenId)
         {
-            var response = await gardenService.getGardenById(id);
+            var response = await gardenService.getGardenById(gardenId);
             return base.Ok(response);
         }
 
@@ -45,7 +45,7 @@ namespace TreeTrackAPI.WebAPI.Controllers
             return base.Ok(response);
         }
 
-        [HttpPost("/save-note/{garden-id}")]
+        [HttpPost("/save-note/{garden-gardenId}")]
         public IActionResult saveNote(SaveNoteDto saveNoteDto, int gardenId)
         {
             var response = gardenService.addNote(saveNoteDto, gardenId);

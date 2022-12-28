@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="dtos\plantTypeDtos\" />
-    <Folder Include="dtos\plantDtos\" />
   </ItemGroup>
 
 </Project>
