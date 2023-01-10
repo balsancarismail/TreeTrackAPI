@@ -18,6 +18,7 @@ builder.Services.AddScoped<INoteDal, EfNoteDal>();
 builder.Services.AddScoped<IPlantDal, EfPlantDal>();
 builder.Services.AddScoped<IPlantTypeDal, EfPlantTypeDal>();
 builder.Services.AddScoped<IUserDal, EfUserDal>();
+builder.Services.AddScoped<IUserGardenDal, EfUserGardenDal>();
 builder.Services.AddScoped(typeof(GardenService));
 builder.Services.AddScoped(typeof(NoteServices));
 builder.Services.AddScoped(typeof(PlantService));

@@ -15,5 +15,6 @@ namespace TicketSystem.Core.Abstract.Dal
         Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, TKey>> selector, OrderType orderByType = OrderType.DESC);
         Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, TKey>> selector, OrderType orderByType = OrderType.DESC);
         Task<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> filter, bool asNoTracking = false);
+        Task<TEntity?> GetByIdAsync(int id);
     }
 }

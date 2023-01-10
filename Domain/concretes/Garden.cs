@@ -7,7 +7,7 @@ namespace TreeTrackAPI.Domain.concretes
     {
         public string GardenName { get; set; }
         public double? Area { get; set; }
-        public List<User> Users { get; set; }
+        public List<UserGarden> Users { get; set; }
         public Polygon Polygon { get; set; }
         public List<Note> Notes { get; set; }
         public List<Plant> Plants { get; set; }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using TreeTrackAPI.DataAccessLayer.abstracts;
 using TreeTrackAPI.Domain.concretes;
-using TreeTrackAPI.Domain.dtos.gardenDtos;
 using TreeTrackAPI.Domain.dtos.noteDtos;
 using TreeTrackAPI.Domain.dtos.plantDtos;
+using TreeTrackAPI.Domain.helpers;
 using TreeTrackAPI.Services.utilities.formatUtilities;
 
 namespace TreeTrackAPI.Services.concretes
@@ -14,22 +15,56 @@ namespace TreeTrackAPI.Services.concretes
         private readonly IPlantDal plantDal;
         private readonly GardenService gardenService;
         private readonly IMapper mapper;
+        private readonly PlantTypeService plantTypeService;
 
-        public PlantService(IPlantDal plantDal, IMapper mapper, GardenService gardenService)
+        public PlantService(IPlantDal plantDal, IMapper mapper, GardenService gardenService, PlantTypeService plantTypeService)
         {
             this.plantDal = plantDal;
             this.mapper = mapper;
             this.gardenService = gardenService;
+            this.plantTypeService = plantTypeService;
         }
 
-        public async Task<GetPlantDto> savePlant(SavePlantDto savePlantDto, int gardenId)
+        public async Task<GetPlantDto> savePlant(SavePlantDto savePlantDto)
         {
-            var plant = mapper.Map<Plant>(savePlantDto);
-            var getGardenDto = gardenService.getGardenById(gardenId);
-            var garden = mapper.Map<Garden>(getGardenDto);
+            
+            Point point = GeographyHelper.ConvertMyPointToPoint(savePlantDto.Location);
 
-            plant.Garden = garden;
-
+            var getGardenDto = await gardenService.getGardenById(savePlantDto.GardenId);
+            // var garden = mapper.Map<Garden>(getGardenDto);
+            var garden = new Garden()
+            {
+                CreatedAt = getGardenDto.CreatedAt,
+                Area = getGardenDto.Area,
+                GardenName = getGardenDto.GardenName,
+                Id = getGardenDto.Id,
+                Polygon = GeographyHelper.ConvertListToPolygon(getGardenDto.Polygon),
+                UpdatedAt = getGardenDto.UpdatedAt,
+                
+            };
+            if (! garden.Polygon.Contains(point))
+            {
+                throw new Exception("Plant location is not in garden area");
+            }
+            var getPlantType = await plantTypeService.getPlantTypeById(savePlantDto.PlantTypeId);
+            var plantType = new PlantType()
+            {
+                Id = getPlantType.Id,
+                Name = getPlantType.Name,
+                Subtype = getPlantType.Subtype
+            };
+            var plant = new Plant()
+            {
+                Name = savePlantDto.Name,
+                Location = point,
+                PlantTypeId = savePlantDto.PlantTypeId,
+                PlantType = plantType,
+                GardenId = savePlantDto.GardenId,
+                Garden = garden,
+                CreatedAt = savePlantDto.CreatedAt,
+                UpdatedAt = savePlantDto.UpdatedAt
+            };
+           
             var savedPlant = await this.plantDal.CreateAsync(plant);
             if (savedPlant == null) { throw new Exception("Plant could not be created"); }
 
@@ -53,19 +88,20 @@ namespace TreeTrackAPI.Services.concretes
 
         public async Task<List<GetPlantDto>> getPlants()
         {
-            var plants = await plantDal.GetAllAsync();
+            var plants = plantDal.GetAllPlantInfo();
             var getPlantDtos = mapper.Map<List<GetPlantDto>>(plants);
-
+            
             return getPlantDtos;
         }
 
         public async Task<GetPlantDto> getPlantById(int id)
         {
-            var plant = await plantDal.GetByFilterAsync(g => g.Id == id);
+            var plant = await plantDal.GetAllPlantInfoById(id);
 
             if (plant == null)
-                throw new Exception("Garden not found!");
-
+            {
+                throw new Exception("Plant not found");
+            }
 
             var getPlantDto = mapper.Map<GetPlantDto>(plant);
             return getPlantDto;

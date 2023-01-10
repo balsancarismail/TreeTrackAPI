@@ -1,5 +1,4 @@
-﻿using NetTopologySuite.Geometries;
-using TreeTrackAPI.Domain.concretes;
+﻿using TreeTrackAPI.Domain.helpers;
 
 namespace TreeTrackAPI.Domain.dtos.gardenDtos
 {
@@ -7,8 +6,8 @@ namespace TreeTrackAPI.Domain.dtos.gardenDtos
     {
         public string GardenName { get; set; }
         public double? Area { get; set; }
-        public List<User> Users { get; set; }
-        public Polygon Polygon { get; set; }
+        public List<int> UserIds { get; set; }
+        public List<MyPoint> Polygon { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

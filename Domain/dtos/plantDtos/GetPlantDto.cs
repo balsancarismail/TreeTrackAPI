@@ -1,10 +1,7 @@
-﻿using NetTopologySuite.Geometries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TreeTrackAPI.Domain.concretes;
+﻿using TreeTrackAPI.Domain.concretes;
+using TreeTrackAPI.Domain.dtos.gardenDtos;
+using TreeTrackAPI.Domain.dtos.plantTypeDtos;
+using TreeTrackAPI.Domain.helpers;
 
 namespace TreeTrackAPI.Domain.dtos.plantDtos
 {
@@ -12,9 +9,10 @@ namespace TreeTrackAPI.Domain.dtos.plantDtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Point Point { get; set; }
-        public Garden Garden { get; set; }
-        public PlantType PlantType { get; set; }
+        public MyPoint Location { get; set; }
+        public GetGardenDto Garden { get; set; }
+        public GetPlantTypeDto PlantType { get; set; }
+        public List<Note> Notes { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

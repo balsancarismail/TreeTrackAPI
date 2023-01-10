@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using TreeTrackAPI.DataAccessLayer.abstracts;
 using TreeTrackAPI.Domain.concretes;
 using TreeTrackAPI.Domain.dtos.gardenDtos;
 using TreeTrackAPI.Domain.dtos.noteDtos;
+using TreeTrackAPI.Domain.helpers;
 using TreeTrackAPI.Services.utilities.formatUtilities;
 
 namespace TreeTrackAPI.Services.concretes
@@ -11,27 +13,36 @@ namespace TreeTrackAPI.Services.concretes
     public class GardenService
     {
         private readonly IGardenDal gardenDal;
+        private readonly IUserGardenDal userGardenDal;
         private readonly UserService userService;
         private readonly IMapper mapper;
 
-        public GardenService(IGardenDal gardenDal, IMapper mapper, UserService userService)
+        public GardenService(IGardenDal gardenDal, IMapper mapper, UserService userService, IUserGardenDal userGardenDal)
         {
             this.gardenDal = gardenDal;
             this.mapper = mapper;
             this.userService = userService;
+            this.userGardenDal = userGardenDal;
         }
 
-        public async Task<GetGardenDto> saveGarden(SaveGardenDto saveGardenDto, int userId)
+        public async Task<GetGardenDto> saveGarden(SaveGardenDto saveGardenDto)
         {
+            Polygon polygon = GeographyHelper.ConvertListToPolygon(saveGardenDto.Polygon);
             var garden = mapper.Map<Garden>(saveGardenDto);
-            var getUserDto = userService.getUserById(userId);
-            var user = mapper.Map<User>(getUserDto);
-
-            garden.Users = new List<User> { user };
-
             var savedGarden = await this.gardenDal.CreateAsync(garden);
             if (savedGarden == null) { throw new Exception("Garden could not be created"); }
 
+            // Insert relation to UserGarden
+            foreach (var userId in saveGardenDto.UserIds)
+            {
+                var userGarden = new UserGarden()
+                {
+                    GardenId = savedGarden.Id,
+                    UserId = userId
+                };
+                await this.userGardenDal.CreateAsync(userGarden);
+
+            }
             var getGarden = mapper.Map<GetGardenDto>(saveGardenDto);
             return getGarden;
         }
@@ -52,7 +63,7 @@ namespace TreeTrackAPI.Services.concretes
 
         public async Task<List<GetGardenDto>> getGardens()
         {
-            var gardens = await gardenDal.GetAllAsync();
+            var gardens = gardenDal.GetAllGardenInfo();
             var getGardenDtos = mapper.Map<List<GetGardenDto>>(gardens);
 
             return getGardenDtos;
@@ -60,7 +71,7 @@ namespace TreeTrackAPI.Services.concretes
 
         public async Task<GetGardenDto> getGardenById(int id)
         {
-            var garden = await gardenDal.GetByFilterAsync(g => g.Id == id);
+            var garden = await gardenDal.GetAllGardenInfoById(id);
 
             if (garden == null)
                 throw new Exception("Garden not found!");

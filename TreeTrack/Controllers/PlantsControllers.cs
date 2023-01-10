@@ -25,15 +25,15 @@ namespace TreeTrackAPI.WebAPI.Controllers
             return base.Ok(plants.Result);
         }
 
-        [HttpPost("/save-plant/{garden-plantId}")]
-        public async Task<IActionResult> save(SavePlantDto dto, int gardenId)
+        [HttpPost("/save-plant")]
+        public async Task<IActionResult> save(SavePlantDto dto)
         {
 
-            var response = await plantService.savePlant(dto, gardenId);
+            var response = await plantService.savePlant(dto);
             return base.Ok(response);
         }
 
-        [HttpGet("/get-plant/{plant-plantId}")]
+        [HttpGet("/get-plant/{plantId}")]
         public async Task<IActionResult> GetByPlantId(int plantId)
         {
             var response = await plantService.getPlantById(plantId);

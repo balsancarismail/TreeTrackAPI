@@ -9,6 +9,6 @@ namespace TreeTrackAPI.Domain.concretes
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<Garden> Gardens { get; set; }
+        public List<UserGarden> Gardens { get; set; }
     }
 }

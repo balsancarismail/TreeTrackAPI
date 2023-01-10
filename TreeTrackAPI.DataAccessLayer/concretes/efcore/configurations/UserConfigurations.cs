@@ -14,8 +14,6 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore.configurations
             builder.Property(u => u.Password).IsRequired();
 
             builder.HasKey(u => u.Id);
-
-            builder.HasMany(u => u.Gardens).WithMany(g => g.Users);
         }
     }
 }

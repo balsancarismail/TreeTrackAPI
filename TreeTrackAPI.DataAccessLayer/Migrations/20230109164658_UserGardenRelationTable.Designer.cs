@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using TreeTrackAPI.DataAccessLayer.concretes.efcore;
@@ -12,9 +13,11 @@ using TreeTrackAPI.DataAccessLayer.concretes.efcore;
 namespace TreeTrackAPI.DataAccessLayer.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230109164658_UserGardenRelationTable")]
+    partial class UserGardenRelationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,7 @@ namespace TreeTrackAPI.DataAccessLayer.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("PlantId")
+                    b.Property<int>("PlantId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -115,7 +118,8 @@ namespace TreeTrackAPI.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlantTypeId")
+                    b.Property<int?>("PlantTypeId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -205,15 +209,15 @@ namespace TreeTrackAPI.DataAccessLayer.Migrations
 
             modelBuilder.Entity("TreeTrackAPI.Domain.concretes.Note", b =>
                 {
-                    b.HasOne("TreeTrackAPI.Domain.concretes.Garden", "Garden")
+                    b.HasOne("TreeTrackAPI.Domain.concretes.Garden", null)
                         .WithMany("Notes")
                         .HasForeignKey("GardenId");
 
                     b.HasOne("TreeTrackAPI.Domain.concretes.Plant", "Plant")
                         .WithMany("Notes")
-                        .HasForeignKey("PlantId");
-
-                    b.Navigation("Garden");
+                        .HasForeignKey("PlantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Plant");
                 });

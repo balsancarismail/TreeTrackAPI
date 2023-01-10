@@ -66,6 +66,14 @@ namespace TicketSystem.Core.Abstract.Dal
             }
         }
 
+        public async Task<TEntity?> GetByIdAsync(int id)
+        {
+            using (TContext context = new())
+            {
+                return await context.Set<TEntity>().FindAsync(id);
+            }
+        }
+
         public TEntity Update(TEntity entity)
         {
             using (TContext context = new())

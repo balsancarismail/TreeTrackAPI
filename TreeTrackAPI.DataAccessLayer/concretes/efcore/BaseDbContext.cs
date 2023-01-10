@@ -9,10 +9,11 @@ namespace TreeTrackAPI.DataAccessLayer.concretes.efcore
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<Garden> Gardens { get; set; }
-        //public DbSet<Note> Notes { get; set; }
+        public DbSet<Note> Notes { get; set; }
         public DbSet<Plant> Plants { get; set; }
         public DbSet<PlantType> PlantTypes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserGarden> UserGardens { get; set; }
 
         public BaseDbContext()
         {
